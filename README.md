@@ -1,0 +1,2 @@
+# Manipulacao-de-Imagens
+Um projeto desenvolvido a fim de realizar um trabalho da disciplina "Elementos de Programação", trabalho este que visava a manipução de imagens .BMP. A tarefa do trabalho consistia em criar algumas funções com a finalidade de modificar a imagem de diversas maneiras como: Borrar a imagem, encontrar as bordas da imagem, retirar determinados tons, encontrar determinados objetos, etc.

@@ -2,35 +2,35 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define NOME_DA_IMAGEM "C:\\USUARIO\\ROBERTO\\AREA_DE_TRABALHO\\nome_da_imagem.bmp"
+#define NOME_DA_IMAGEM "DIR"
 
 #pragma pack(1) // Desativa o alinhamento de bytes
 
 struct CAB
 {
     uint16_t fType;    // Tipo do arquivo
-    uint32_t fSize;    // Tamanho do arquivo (cabeçalho)
-    uint16_t mR1;      // Espaço reservado
-    uint16_t mR2;      // Espaço reservado
-    uint32_t byteshift; // Especifica o DESLOCAMENTO em bytes do início
+    uint32_t fSize;    // Tamanho do arquivo (cabeÃ§alho)
+    uint16_t mR1;      // EspaÃ§o reservado
+    uint16_t mR2;      // EspaÃ§o reservado
+    uint32_t byteshift; // Especifica o DESLOCAMENTO em bytes do inÃ­cio
 };
 
 struct DADOS
 {
-    uint32_t tamanho_cab;      // Tamanho do cabeçalho
+    uint32_t tamanho_cab;      // Tamanho do cabeÃ§alho
     int32_t largura;           // Largura da imagem em pixels
     int32_t altura;            // Altura da imagem em pixels
     uint16_t planos;           // Quantidade de planos
     uint16_t bitcount;         // Bits por pixel
-    uint32_t bCompress;        // Compressão utilizada
+    uint32_t bCompress;        // CompressÃ£o utilizada
     uint32_t tamanho_img_byte; // Tamanho da imagem em bytes
-    int32_t resXPPMeter;       // Resolução horizontal pixel/metro
-    int32_t resYPPMeter;       // Resolução vertical pixel/metro
-    uint32_t numClrUsed;       // Número de cores na imagem
-    uint32_t numClrImpor;      // Número de cores importantes
+    int32_t resXPPMeter;       // ResoluÃ§Ã£o horizontal pixel/metro
+    int32_t resYPPMeter;       // ResoluÃ§Ã£o vertical pixel/metro
+    uint32_t numClrUsed;       // NÃºmero de cores na imagem
+    uint32_t numClrImpor;      // NÃºmero de cores importantes
 };
 
-#pragma pack() // Restaura o alinhamento de bytes padrão
+#pragma pack() // Restaura o alinhamento de bytes padrÃ£o
 
 void imprimirDados(const char *s, const struct CAB *cabecalho, const struct DADOS *dados)
 {
@@ -51,7 +51,7 @@ void tons_de_cinza(FILE *imagem, FILE *nova_imagem, const struct DADOS *dados_im
 
     for (int i = 0; i < dados_imagem->altura; i++)
     {
-        fread(linha, 1, linha_bytes, imagem); // Lê uma linha de pixels da imagem original
+        fread(linha, 1, linha_bytes, imagem); // LÃª uma linha de pixels da imagem original
         for (int j = 0; j < linha_bytes; j += 3) // Percorre os pixels na linha
         {
             unsigned char blue = linha[j];
@@ -77,7 +77,7 @@ void trocar_cores(FILE *imagem, FILE *nova_imagem, const struct DADOS *dados_ima
 
     for (int i = 0; i < dados_imagem->altura; i++)
     {
-        fread(linha, 1, linha_bytes, imagem); // Lê uma linha de pixels da imagem original
+        fread(linha, 1, linha_bytes, imagem); // LÃª uma linha de pixels da imagem original
         for (int j = 0; j < linha_bytes; j += 3) // Percorre os pixels na linha
         {
             unsigned char blue = linha[j];
@@ -96,7 +96,7 @@ void trocar_cores(FILE *imagem, FILE *nova_imagem, const struct DADOS *dados_ima
 }
 int main()
 {
-    struct CAB header; // Criando uma estrutura CAB para armazenar os valores do cabeçalho
+    struct CAB header; // Criando uma estrutura CAB para armazenar os valores do cabeÃ§alho
     struct DADOS dados_imagem; // Criando uma estrutura DADOS para armazenar os valores da imagem
 
     int opc;
@@ -120,28 +120,28 @@ int main()
         return 2;
     }
 
-    fread(&header, sizeof(struct CAB), 1, imagem); // Preenchendo a estrutura com os valores de cabeçalho
+    fread(&header, sizeof(struct CAB), 1, imagem); // Preenchendo a estrutura com os valores de cabeÃ§alho
     fread(&dados_imagem, sizeof(struct DADOS), 1, imagem); // Preenchendo a estrutura com os valores da imagem
 
-    fwrite(&header, sizeof(struct CAB), 1, nova_imagem); // Copiando os valores de cabeçalho para a imagem nova
+    fwrite(&header, sizeof(struct CAB), 1, nova_imagem); // Copiando os valores de cabeÃ§alho para a imagem nova
     fwrite(&dados_imagem, sizeof(struct DADOS), 1, nova_imagem); // Copiando os valores da imagem para a imagem nova
     
     switch (opc)
     {
         case 1:
-            trocar_cores(imagem, nova_imagem, &dados_imagem); // Chamando a função para trocar cores
+            trocar_cores(imagem, nova_imagem, &dados_imagem); // Chamando a funÃ§Ã£o para trocar cores
             break;
 
         case 2:
-            tons_de_cinza(imagem, nova_imagem, &dados_imagem); // Chamando a função tons de cinza
+            tons_de_cinza(imagem, nova_imagem, &dados_imagem); // Chamando a funÃ§Ã£o tons de cinza
             break;
 
-        default: // Caso o usuário insira uma entrada inválida
+        default: // Caso o usuÃ¡rio insira uma entrada invÃ¡lida
             printf("OPCAO INVALIDA\n");
             return 4;
     }
 
-    imprimirDados(NOME_DA_IMAGEM, &header, &dados_imagem); // Função para imprimir os dados das imagens
+    imprimirDados(NOME_DA_IMAGEM, &header, &dados_imagem); // FunÃ§Ã£o para imprimir os dados das imagens
 
     // Fechando ambas as imagens
     fclose(imagem);
